@@ -32,5 +32,24 @@
             ],
             "problemMatcher": []
         },
+        // Conda
+        {
+            "label": "conda: env create",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "${config:WIN_VSCODE_DIR}/conda_env.sh",
+                "${input:conda_env_name}",
+            ],
+            "problemMatcher": []
+        },
     ],
+    "inputs": [
+        {
+            "id": "conda_env_name",
+            "type": "promptString",
+            "description": "Conda Env Name",
+            "default": "",
+        },
+    ]
 }

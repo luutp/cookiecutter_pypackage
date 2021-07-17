@@ -55,9 +55,7 @@ def load_json(json_filepath):
     hours, rem = divmod(elapsed_time, 3600)
     minutes, seconds = divmod(rem, 60)
     msg = "DONE-" "Elapsed Time: {hours:0>2}:{mins:0>2}:{secs:0>2}\t".format(
-        hours=int(hours),
-        mins=int(minutes),
-        secs=int(seconds),
+        hours=int(hours), mins=int(minutes), secs=int(seconds),
     )
     print(msg)
     return output
