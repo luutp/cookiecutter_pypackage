@@ -1,0 +1,42 @@
+name: make_docs
+
+on:
+  # Trigger the workflow on push or pull request, for develop branch
+  push:
+    branches:
+      - master
+      - develop      
+  pull_request:
+    branches:
+      - develop
+
+jobs:      
+  make_mkdocs:
+    name: Build mkdocs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.7']
+    steps:
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}    
+    - uses: actions/checkout@v2
+      with:
+        ref: develop #checkout at docs branch          
+    - name: update pip
+      run: |
+        pip install --upgrade pip
+    - name: chmod
+      run: |
+        chmod +x ./.github/actions/install-requirements/script.sh
+    - name: Install python dependencies
+      uses: ./.github/actions/install-requirements
+      with:
+        path: docs_requirements.txt
+    - name: Deploy documentation      
+      run: |
+        pip list
+        mkdocs gh-deploy --force
+        mkdocs --version

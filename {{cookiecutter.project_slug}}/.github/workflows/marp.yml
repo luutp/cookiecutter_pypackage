@@ -1,0 +1,43 @@
+name: marp_slides
+
+on:
+  # Trigger the workflow on push or pull request, for develop branch
+  push:
+    branches:
+      - master
+      - develop      
+  pull_request:
+    branches:
+      - develop
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  marp:
+    name: Build Marp Markdown
+    runs-on: ubuntu-latest
+  
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: marp-action
+        env: 
+          MARP_ARGS: "-I docs/slides/ --output docs/slides/ --html" # this is the important line change since our marp command is different from the standard one          
+          GITHUB_TOKEN: ${{ secrets.LUU_ACTIONS_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PUBLISH_TO_BRANCH: slides
+          BASE_URL: luutp.github.io/${{ github.repository }}/slides/
+        uses: ralexander-phi/marp-action@master
+
+      - name: Copy from slides to gh-pages branch
+        uses: andstor/copycat-action@v3
+        with:
+          personal_token: ${{ secrets.LUU_ACTIONS_TOKEN }}
+          dst_owner: ${{ github.repository_owner }}
+          dst_repo_name: review_ai_robotics
+          src_branch: slides
+          src_path: /docs/slides
+          dst_branch: gh-pages
+          dst_path: /
+          clean: false
