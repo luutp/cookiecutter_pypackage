@@ -53,7 +53,7 @@ Bootstrap-Flask==1.2.0
 itsdangerous==2.0.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
-Pillow==8.3.0
+Pillow==9.0.0
 pycparser==2.18
 six==1.11.0
 SQLAlchemy==1.4.20
