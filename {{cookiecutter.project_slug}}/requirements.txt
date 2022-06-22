@@ -20,7 +20,7 @@ qtawesome
 pyinstaller==4.0
 
 # Data analysis
-numpy==1.19.5
+numpy==1.22.0
 pandas
 missingno==0.4.2
 
